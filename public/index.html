@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>WebRTC Video Call</title>
+  <style>
+    video { width: 45%; margin: 10px; border: 2px solid #444; border-radius: 10px; }
+    body { text-align: center; background: #f9f9f9; font-family: sans-serif; }
+  </style>
+</head>
+<body>
+  <h1>WebRTC Video Calling App</h1>
+  <video id="localVideo" autoplay muted></video>
+  <video id="remoteVideo" autoplay></video>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
