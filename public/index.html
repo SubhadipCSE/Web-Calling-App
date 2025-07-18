@@ -5,12 +5,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>WebRTC Video Call</title>
+  <title>WebRTC Multi-Participant Call</title>
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
@@ -38,7 +34,7 @@
 
     video {
       width: 100%;
-      max-width: 480px;
+      max-width: 300px;
       border-radius: 12px;
       border: 4px solid #4f46e5;
       background: #000;
@@ -62,48 +58,55 @@
       transition: background 0.3s ease;
     }
 
-    #startCall {
-      background-color: #10b981;
-      color: white;
-    }
+    #startCall { background-color: #10b981; color: white; }
+    #hangUp { background-color: #ef4444; color: white; }
+    #muteBtn, #videoBtn { background-color: #3b82f6; color: white; }
 
-    #hangUp {
-      background-color: #ef4444;
-      color: white;
-    }
-
-    #muteBtn,
-    #videoBtn {
-      background-color: #3b82f6;
-      color: white;
-    }
-
-    button:hover {
-      opacity: 0.9;
-    }
+    button:hover { opacity: 0.9; }
 
     footer {
       padding: 1rem;
       font-size: 0.9rem;
       color: #666;
     }
+
+    #showParticipants {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      padding: 10px 15px;
+      border-radius: 6px;
+      background-color: #4f46e5;
+      color: white;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+    }
+
+    #participantsModal {
+      display: none;
+      position: fixed;
+      top: 10%;
+      right: 10%;
+      background: white;
+      border: 2px solid #4f46e5;
+      border-radius: 8px;
+      padding: 1rem;
+      max-width: 300px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    }
   </style>
 </head>
 
 <body>
-  <header>
-    WebRTC Video Calling App
-  </header>
+  <header>WebRTC Multi-Participant App</header>
 
   <div class="videos">
     <div>
       <video id="localVideo" autoplay muted playsinline></video>
       <p>Local Video</p>
     </div>
-    <div>
-      <video id="remoteVideo" autoplay playsinline></video>
-      <p>Remote Video</p>
-    </div>
+    <div class="remote-container" style="display:flex;flex-wrap:wrap;justify-content:center;"></div>
   </div>
 
   <div class="controls">
@@ -113,12 +116,15 @@
     <button id="videoBtn">Video Off</button>
   </div>
 
-  <footer>
-    &copy; 2025 Scezonex | WebRTC Demo
-  </footer>
+  <button id="showParticipants">Participants</button>
+  <div id="participantsModal">
+    <h3>Participants</h3>
+    <ul id="participantsList" style="list-style:none;padding:0;"></ul>
+  </div>
+
+  <footer>&copy; 2025 Scezonex | WebRTC Demo</footer>
 
   <script src="/socket.io/socket.io.js"></script>
   <script src="script.js"></script>
 </body>
-
 </html>
